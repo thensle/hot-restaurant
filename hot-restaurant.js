@@ -1,13 +1,22 @@
 //JS
 //Require packages: mysql, express, body-parser
-// var mysql = require("mysql");
+var mysql = require("mysql");
 var express = require("express");
 var bodyParser = require("body-parser");
 var path = require("path");
 
 var reservationsAll = [];
+var waitList = [];
 
 //Connect to the database
+
+var connection = mysql.createConnection({
+	 host: "localhost", // connect to the local mysql app on the computer
+	 port: 3306,
+	 user: "root",
+	 password: "pu55ypause!",
+	 database: "hotRestaurant" // need to be connecting to a database that exists locally (like in workbench)
+});
 
 //Create and connect server
 
@@ -33,19 +42,27 @@ server.get("/", function(request, response){
 });
 
 //Reservation Page
-
-
 server.post("/reserve/create", function(request, response){
 	var reservation = request.body;
 	console.log(reservation);
 	reservationsAll.push(reservation);
-	response.send("Your reservation has been made!");
-
 });
 
 server.get("/reserve", function(request, response){
 	response.sendFile(path.join(__dirname, "reserve.html"));
-})
+});
+
+//Waiting List Page
+
+server.get("/wait", function(request, response){
+	response.sendFile(path.join(__dirname, "wait.html"));
+});
+
+server.post("/wait/create", function(request, response){
+	var list = request.body;
+	waitList.push(list);
+	console.log(list);
+});
 
 //View Tables page
 server.get("/view", function(request, response){
@@ -53,8 +70,12 @@ server.get("/view", function(request, response){
 });
 
 //Development - Viewing Table API
-server.get("/api/tables", function(request, response){
+server.get("/api/tables/reserve", function(request, response){
 	return response.json(reservationsAll);
+});
+
+server.get("/api/tables/wait", function(request, response){
+	return response.json(waitList);
 });
 
 //***Routes to get/post data 
