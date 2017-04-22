@@ -49,6 +49,10 @@ server.get("/", function(request, response){
 	response.sendFile(path.join(__dirname, "home.html"));
 });
 
+server.get("/home.js", function(request, response){
+	response.sendFile(path.join(__dirname, "frontend-hot-restaurant.js"));
+});
+
 //Reservation Page
 server.post("/reserve/create", function(request, response){
 	var reservation = request.body;
@@ -81,11 +85,16 @@ server.get("/view", function(request, response){
 
 //Development - Viewing Table API
 server.get("/api/tables/reserve", function(request, response){
-	return response.json(reservationsAll);
+	connection.query("Select * from reservations", function(error, data){
+		return response.json(data);
+	});
+	
 });
 
 server.get("/api/tables/wait", function(request, response){
-	return response.json(waitList);
+	connection.query("Select * from waitlist", function(error, data){
+		return response.json(data);
+	});
 });
 
 function addReservation(reservation){
@@ -95,7 +104,7 @@ function addReservation(reservation){
 			console.log(error);
 		} else {
 			console.log("Reservation submitted!");
-		}
+		};
 	});
 };
 
@@ -105,9 +114,11 @@ function addCustomer(waitlist){
 			console.log(error);
 		} else {
 			console.log("Customer Request Submitted!");
-		}
+		};
 	});
 };
+
+
 //***Routes to get/post data 
 
 //HTML

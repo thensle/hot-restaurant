@@ -2,9 +2,53 @@
 <html>
 <head>
 	<title>Hot Restaurant</title>
+	<!-- Link to bootstrap -->
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+	<!-- Link to JQuery -->
+	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript" src = "home.js"></script>
 </head>
 <body>
-	<h1>Welcome to Hot Restaurant!</h1>
+    <h1>Welcome to Hot Restaurant!</h1>
+        <br>
+    <h2>Current Reservations</h2>
+     <div class="table-responsive">          
+     <table class="table">
+       <thead>
+     <tr>
+       <th>#</th>
+       <th>First Name</th>
+       <th>Last Name</th>
+       <th>Phone #</th>
+       <th>Reservation</th>
+       <th>Party</th>
+     </tr>
+       </thead>
+       <tbody class = "reservations-table">
+       </tbody>
+     </table>
+     </div>
+    </div>
+
+<br>
+    <h2>Current Waitlist</h2>
+ <div class="table-responsive">          
+ <table class="table">
+   <thead>
+     <tr>
+       <th>#</th>
+       <th>First Name</th>
+       <th>Last Name</th>
+       <th>Phone #</th>
+       <th>Arrival Time</th>
+       <th>Party</th>
+     </tr>
+   </thead>
+   <tbody class = "waitlist-table">
+   </tbody>
+ </table>
+ </div>
+</div>
 
 </body>
-</html>
