@@ -5,6 +5,8 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var path = require("path");
 
+var reservationsAll = [];
+
 //Connect to the database
 
 //Create and connect server
@@ -31,6 +33,16 @@ server.get("/", function(request, response){
 });
 
 //Reservation Page
+
+
+server.post("/reserve/create", function(request, response){
+	var reservation = request.body;
+	console.log(reservation);
+	reservationsAll.push(reservation);
+	response.send("Your reservation has been made!");
+
+});
+
 server.get("/reserve", function(request, response){
 	response.sendFile(path.join(__dirname, "reserve.html"));
 })
@@ -42,14 +54,7 @@ server.get("/view", function(request, response){
 
 //Development - Viewing Table API
 server.get("/api/tables", function(request, response){
-	var obj = {
-		name: "Xasey",
-		time: "10:51am",
-		phoneNumber: "555-236-6234",
-		partySize: 100
-	};
-
-	return response.json(obj);
+	return response.json(reservationsAll);
 });
 
 //***Routes to get/post data 
