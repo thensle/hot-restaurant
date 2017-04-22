@@ -18,6 +18,14 @@ var connection = mysql.createConnection({
 	 database: "hotRestaurant" // need to be connecting to a database that exists locally (like in workbench)
 });
 
+connection.connect(function(error){
+	if (error){
+		console.log(error);
+	} else {
+		console.log("Connected!");
+	};
+});
+
 //Create and connect server
 
 var server = express();
@@ -44,6 +52,7 @@ server.get("/", function(request, response){
 //Reservation Page
 server.post("/reserve/create", function(request, response){
 	var reservation = request.body;
+	addReservation(reservation);
 	console.log(reservation);
 	reservationsAll.push(reservation);
 });
@@ -60,6 +69,7 @@ server.get("/wait", function(request, response){
 
 server.post("/wait/create", function(request, response){
 	var list = request.body;
+	addCustomer(list);
 	waitList.push(list);
 	console.log(list);
 });
@@ -78,6 +88,26 @@ server.get("/api/tables/wait", function(request, response){
 	return response.json(waitList);
 });
 
+function addReservation(reservation){
+//Need Set with ? parameter
+	connection.query("Insert into reservations SET ?", reservation, function(error, response){
+		if (error){
+			console.log(error);
+		} else {
+			console.log("Reservation submitted!");
+		}
+	});
+};
+
+function addCustomer(waitlist){
+	connection.query("Insert into reservations SET ?", waitlist, function(error, response){
+		if (error){
+			console.log(error);
+		} else {
+			console.log("Customer Request Submitted!");
+		}
+	});
+};
 //***Routes to get/post data 
 
 //HTML
